@@ -4,7 +4,7 @@ import styles from "./AppNav.module.css";
 function AppNav() {
   return (
     <nav>
-      <ul className={styles.list}>
+      <ul className={styles.nav}>
         <Link to="/">home</Link>
       </ul>
     </nav>
