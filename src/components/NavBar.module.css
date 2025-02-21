@@ -1,0 +1,16 @@
+.list {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+
+}
+
+.list li {
+    text-decoration: none;
+}
+
+.list :global(.active) {
+    background-color: #0dd861;
+
+}
