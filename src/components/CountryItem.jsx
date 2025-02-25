@@ -1,5 +1,5 @@
 import styles from "./CountryItem.module.css";
-import FetchEmoji from "./fetchEmoji";
+import FetchEmoji from "./FetchEmoji";
 
 function CountryItem({ cities }) {
   const countries = cities.reduce((array, city) => {
