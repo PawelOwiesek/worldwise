@@ -1,11 +1,24 @@
 import styles from "./CountryItem.module.css";
+import FetchEmoji from "./fetchEmoji";
 
-function CountryItem({ country }) {
+function CountryItem({ cities }) {
+  const countries = cities.reduce((array, city) => {
+    if (!array.map((el) => el.country).includes(city.country))
+      return [...array, { country: city.country, emoji: city.emoji }];
+    else return array;
+  }, []);
+
   return (
-    <li className={styles.countryItem}>
-      <span>{country.emoji}</span>
-      <span>{country.country}</span>
-    </li>
+    <>
+      {countries.map((country) => {
+        return (
+          <li key={country.emoji} className={styles.countryItem}>
+            <FetchEmoji city={country} />
+            <span>{country.country}</span>
+          </li>
+        );
+      })}
+    </>
   );
 }
 
