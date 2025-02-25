@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./fetchEmoji.module.css";
+import styles from "./FetchEmoji.module.css";
 
 import emojiToCountryCode from "../../data/emojiToCountryCode";
 
