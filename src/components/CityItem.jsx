@@ -1,5 +1,5 @@
 import styles from "./CityItem.module.css";
-import FetchEmoji from "./fetchEmoji";
+import FetchEmoji from "./FetchEmoji";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
