@@ -9,11 +9,11 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import CityList from "./components/CityList";
 import CountriesList from "./components/CountriesList";
-import city from "../data/cities.json";
+
 const BASE_URL = "http://localhost:9000";
 
 function App() {
-  const [cities, setCities] = useState(city);
+  const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
