@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
 import FetchEmoji from "./FetchEmoji";
 
@@ -9,14 +10,16 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function CityItem({ city }) {
-  const { cityName, date } = city;
+  const { cityName, date, id } = city;
 
   return (
-    <li className={styles.cityItem}>
-      <FetchEmoji city={city} />
-      <h3 className={styles.name}> {cityName}</h3>
-      <time className={styles.date}>({formatDate(date)})</time>
-      <button className={styles.deleteBtn}>&times;</button>
+    <li>
+      <Link className={styles.cityItem} to={`${id}`}>
+        <FetchEmoji city={city} />
+        <h3 className={styles.name}> {cityName}</h3>
+        <time className={styles.date}>({formatDate(date)})</time>
+        <button className={styles.deleteBtn}>&times;</button>
+      </Link>
     </li>
   );
 }
