@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Product from "./pages/Product";
@@ -11,27 +10,10 @@ import CityList from "./components/CityList";
 import CountriesList from "./components/CountriesList";
 import City from "./components/City";
 import Form from "./components/Form";
-import { getCities } from "./firebase";
+
+import { CitiesProvider } from "./citiesContext";
 
 function App() {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const res = await getCities();
-        setCities(res);
-      } catch (error) {
-        alert(`There was an error loading data... ${error}`);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -39,19 +21,22 @@ function App() {
         <Route path="pricing" element={<Pricing />} />
         <Route path="product" element={<Product />} />
         <Route path="login" element={<Login />} />
-        <Route path="app" element={<AppLayout />}>
+
+        <Route
+          path="app"
+          element={
+            <CitiesProvider>
+              <AppLayout />
+            </CitiesProvider>
+          }
+        >
           <Route index element={<Navigate replace to="cities" />} />
-          <Route
-            path="cities"
-            element={<CityList cities={cities} isLoading={isLoading} />}
-          />
+          <Route path="cities" element={<CityList />} />
           <Route path="cities/:id" element={<City />} />
-          <Route
-            path="countries"
-            element={<CountriesList cities={cities} isLoading={isLoading} />}
-          />
+          <Route path="countries" element={<CountriesList />} />
           <Route path="form" element={<Form />} />
         </Route>
+
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
