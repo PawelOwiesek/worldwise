@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import CitiesProvider from "./citiesContext";
 
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
@@ -10,8 +11,6 @@ import CityList from "./components/CityList";
 import CountriesList from "./components/CountriesList";
 import City from "./components/City";
 import Form from "./components/Form";
-
-import { CitiesProvider } from "./citiesContext";
 
 function App() {
   return (
