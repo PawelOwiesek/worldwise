@@ -1,7 +1,10 @@
+import useCities from "../useCities";
 import styles from "./CountryItem.module.css";
 import FetchEmoji from "./FetchEmoji";
 
-function CountryItem({ cities }) {
+function CountryItem() {
+  const { cities } = useCities();
+
   const countries = cities.reduce((array, city) => {
     if (!array.map((el) => el.country).includes(city.country))
       return [...array, { country: city.country, emoji: city.emoji }];
