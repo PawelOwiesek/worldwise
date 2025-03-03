@@ -15,9 +15,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export const getCities = async () => {
+export const getCities = async (id) => {
   const querySnapshot = await getDocs(collection(db, "cities"));
-  return querySnapshot.docs.map((doc) => doc.data());
+  const cities = querySnapshot.docs.map((doc) => doc.data());
+  if (id) {
+    return cities.find((city) => city.id === id) || null;
+  }
+
+  return cities;
 };
 
 export { db };
