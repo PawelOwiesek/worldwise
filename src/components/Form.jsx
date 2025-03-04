@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useUrlPosition from "../useUrlPosition";
 import styles from "./Form.module.css";
 import Button from "./Button";
+import Spinner from "./Spinner";
 import FetchEmoji from "./FetchEmoji";
 
 export function convertToEmoji(countryCode) {
@@ -45,6 +46,8 @@ function Form() {
     }
     fetchCityData();
   }, [lat, lng]);
+
+  if (isLoadingGeocoding) return <Spinner />;
 
   return (
     <form className={styles.form}>
