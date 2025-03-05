@@ -12,10 +12,16 @@ const formatDate = (date) =>
 
 function CityItem({ city }) {
   const { cityName, date, id, position } = city;
-  const { currentCity } = useCities();
+  const { currentCity, removeCity } = useCities();
+
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete ${cityName}?`)) {
+      removeCity(id);
+    }
+  };
 
   return (
-    <li key={id}>
+    <li style={{ display: "flex" }} key={id}>
       <Link
         className={`${styles.cityItem} ${
           currentCity.id === id ? styles["cityItem--active"] : ""
@@ -26,8 +32,10 @@ function CityItem({ city }) {
         <FetchEmoji city={city} />
         <h3 className={styles.name}> {cityName}</h3>
         <time className={styles.date}>({formatDate(date)})</time>
-        <button className={styles.deleteBtn}>&times;</button>
       </Link>
+      <button type="delete" className={styles.deleteBtn} onClick={handleDelete}>
+        &times;
+      </button>
     </li>
   );
 }
