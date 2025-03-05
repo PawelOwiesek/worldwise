@@ -21,7 +21,7 @@ function City() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getCity(Number(id));
+    getCity(id);
   }, [id]);
 
   if (isLoading) return <Spinner />;

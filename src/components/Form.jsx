@@ -48,6 +48,7 @@ function Form() {
 
   useEffect(() => {
     async function fetchCityData() {
+      if (!lat || !lng) return;
       try {
         setIsLoadingGeocoding(true);
         const res = await fetch(`${BASE_URL}?latitude=${lat}&longitude=${lng}`);
