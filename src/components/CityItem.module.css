@@ -4,7 +4,7 @@
   display: flex;
   gap: 1.6rem;
   align-items: center;
-
+  min-width: 400px;
   background-color: var(--color-dark--2);
   border-radius: 7px;
   padding: 1rem 2rem;
@@ -31,11 +31,13 @@
 }
 
 .deleteBtn {
+  align-self: center;
+  margin-left: 10px;
   height: 2rem;
   aspect-ratio: 1;
   border-radius: 50%;
   border: none;
-  background-color: var(--color-dark--1);
+  background-color: var(--color-red--0);
   color: var(--color-light--2);
   font-size: 1.6rem;
   font-weight: 400;
