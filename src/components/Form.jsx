@@ -3,6 +3,7 @@ const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useUrlPosition from "../useUrlPosition";
+import useCities from "../useCities";
 import styles from "./Form.module.css";
 import Button from "./Button";
 import Spinner from "./Spinner";
@@ -24,7 +25,26 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [lat, lng] = useUrlPosition();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
-  const [emoji, setEmoji] = useState({});
+  const [emoji, setEmoji] = useState([]);
+  const [emojiCode, setEmojiCode] = useState("");
+  const { addCity } = useCities();
+
+  async function handleAddCity(e) {
+    e.preventDefault();
+    if (!cityName || !lat || !lng) return;
+
+    const newCity = {
+      cityName,
+      country,
+      date: date.toISOString(),
+      emoji: emojiCode,
+      notes,
+      position: { lat, lng },
+    };
+    alert("City added successfully!");
+    addCity(newCity);
+    navigate(-1);
+  }
 
   useEffect(() => {
     async function fetchCityData() {
@@ -38,6 +58,7 @@ function Form() {
           country: data.countryName,
           emoji: convertToEmoji(data.countryCode),
         });
+        setEmojiCode(convertToEmoji(data.countryCode));
       } catch (err) {
         console.log(err);
       } finally {
@@ -50,7 +71,7 @@ function Form() {
   if (isLoadingGeocoding) return <Spinner />;
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleAddCity}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
