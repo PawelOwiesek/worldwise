@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
@@ -16,13 +22,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export const getCities = async (id) => {
-  const querySnapshot = await getDocs(collection(db, "cities"));
-  const cities = querySnapshot.docs.map((doc) => doc.data());
   if (id) {
-    return cities.find((city) => city.id === id) || null;
+    const docRef = doc(db, "cities", id);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+  } else {
+    const querySnapshot = await getDocs(collection(db, "cities"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   }
-
-  return cities;
 };
-
 export { db };
