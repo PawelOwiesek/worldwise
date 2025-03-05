@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { getCities } from "./firebase";
+import { db, getCities } from "./firebase";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 
 const CitiesContext = createContext([]);
 
@@ -35,8 +36,35 @@ const CitiesProvider = ({ children }) => {
     }
   }
 
+  async function addCity(newCity) {
+    try {
+      setIsLoading(true);
+
+      const docRef = await addDoc(collection(db, "cities"), newCity);
+      setCities((prevCities) => [...prevCities, { ...newCity, id: docRef.id }]);
+    } catch (error) {
+      alert(`There was an error adding the city... ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function removeCity(id) {
+    try {
+      setIsLoading(true);
+      await deleteDoc(doc(db, "cities", String(id)));
+      setCities((prevCities) => prevCities.filter((city) => city.id !== id));
+    } catch (error) {
+      alert(`There was an error deleting the city... ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, isLoading, currentCity, getCity }}>
+    <CitiesContext.Provider
+      value={{ cities, isLoading, currentCity, getCity, addCity, removeCity }}
+    >
       {children}
     </CitiesContext.Provider>
   );
