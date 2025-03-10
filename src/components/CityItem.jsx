@@ -15,9 +15,7 @@ function CityItem({ city }) {
   const { currentCity, removeCity } = useCities();
 
   const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${cityName}?`)) {
-      removeCity(id);
-    }
+    removeCity(id);
   };
 
   return (
