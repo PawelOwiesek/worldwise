@@ -2,6 +2,8 @@ const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import useUrlPosition from "../useUrlPosition";
 import useCities from "../useCities";
 import styles from "./Form.module.css";
@@ -21,13 +23,13 @@ function Form() {
   const navigate = useNavigate();
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
   const [lat, lng] = useUrlPosition();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [emoji, setEmoji] = useState([]);
   const [emojiCode, setEmojiCode] = useState("");
   const { addCity } = useCities();
+  const [startDate, setStartDate] = useState(new Date());
 
   async function handleAddCity(e) {
     e.preventDefault();
@@ -36,12 +38,11 @@ function Form() {
     const newCity = {
       cityName,
       country,
-      date: date.toISOString(),
+      date: startDate.toISOString(),
       emoji: emojiCode,
       notes,
       position: { lat, lng },
     };
-    alert("City added successfully!");
     addCity(newCity);
     navigate(-1);
   }
@@ -87,10 +88,10 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
-          id="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          dateFormat="dd/MM/yyyy"
         />
       </div>
 
