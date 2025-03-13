@@ -1,14 +1,20 @@
 .homepage {
   height: calc(100vh - 5rem);
   margin: 2.5rem;
-  background-image: linear-gradient(
-      rgba(36, 42, 46, 0.8),
-      rgba(36, 42, 46, 0.8)
-    ),
+  background-image: linear-gradient(rgba(36, 42, 46, 0.8),
+      rgba(36, 42, 46, 0.8)),
     url("../bg.jpg");
   background-size: cover;
   background-position: center;
   padding: 2.5rem 5rem;
+
+  @media (max-width:1080px) {
+    height: 30vh;
+  }
+
+  @media (max-width:767px) {
+    height: 80vh;
+  }
 }
 
 .homepage section {
@@ -19,6 +25,11 @@
   justify-content: center;
   gap: 2.5rem;
   text-align: center;
+
+  @media (max-width: 540px) {
+    margin: -2rem;
+    padding: 1rem;
+  }
 }
 
 .homepage h1 {
@@ -31,4 +42,25 @@
   font-size: 1.9rem;
   color: var(--color-light--1);
   margin-bottom: 2.5rem;
+}
+
+@media (max-width: 1024px) {
+  .homepage {
+    margin: 1.5rem;
+  }
+
+  .homepage h1 {
+    font-size: 1.8rem;
+  }
+
+  .homepage h2 {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .homepage h2 {
+    font-size: 1rem;
+  }
 }
