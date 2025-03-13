@@ -28,7 +28,7 @@ function Form() {
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [emoji, setEmoji] = useState([]);
   const [emojiCode, setEmojiCode] = useState("");
-  const { addCity } = useCities();
+  const { addCity, isLoading } = useCities();
   const [startDate, setStartDate] = useState(new Date());
 
   async function handleAddCity(e) {
@@ -43,7 +43,7 @@ function Form() {
       notes,
       position: { lat, lng },
     };
-    addCity(newCity);
+    await addCity(newCity);
     navigate(-1);
   }
 
@@ -73,7 +73,10 @@ function Form() {
   if (isLoadingGeocoding) return <Spinner />;
 
   return (
-    <form className={styles.form} onSubmit={handleAddCity}>
+    <form
+      className={`${styles.form} ${isLoading ? styles.loading : ""}`}
+      onSubmit={handleAddCity}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -89,6 +92,7 @@ function Form() {
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
         <DatePicker
+          id="date"
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           dateFormat="dd/MM/yyyy"
