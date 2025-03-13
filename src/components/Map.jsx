@@ -15,7 +15,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 
-function Map() {
+function Map({ setIsSidebarOpen, isSidebarOpen }) {
   const [mapPositon, setMapPositon] = useState([40, 0]);
   const { cities } = useCities();
   const [mapLat, mapLng] = useUrlPosition();
@@ -63,7 +63,10 @@ function Map() {
           </Marker>
         ))}
         <ChangeCenter position={mapPositon} />
-        <OnMapClick />
+        <OnMapClick
+          setIsSidebarOpen={setIsSidebarOpen}
+          isSidebarOpen={isSidebarOpen}
+        />
       </MapContainer>
     </div>
   );
@@ -75,12 +78,13 @@ function ChangeCenter({ position }) {
   return null;
 }
 
-function OnMapClick() {
+function OnMapClick({ setIsSidebarOpen, isSidebarOpen }) {
   const navigate = useNavigate();
 
   useMapEvents({
     click: (e) => {
       navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+      setIsSidebarOpen(!isSidebarOpen);
     },
   });
 }
